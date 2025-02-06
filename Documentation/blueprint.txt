@@ -1,0 +1,8 @@
+We want to create a Player class, a Field class, and a Board class to keep the game well-structured and easy to manage. 
+The Player class will handle player-related details such as their symbol (e.g., 'X' or 'O') and their moves. The Field class will 
+represent a single cell on the board, storing information about whether it is empty or occupied by a player. The Board class will 
+manage the entire game board, displaying it, keeping track of moves, and checking for a winner. To make the game functional,
+we need methods like making_a_move, which allows a player to place their symbol on the board, did_u_win, which checks if a player has won, 
+and start_game, which begins and runs the game loop while managing turns. We will also define important variables, 
+such as occupied_by in the Field class to store which player, if any, has placed a piece there. In the Player class, 
+we will have symbol to represent the player's marker and name to store their identity. 
