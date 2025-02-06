@@ -4,9 +4,6 @@ class Player:
     def set_number(self, number: int):
         self.number = number
 
-    def set_symbol(self, symbol) -> None:
-        self.symbol = symbol
-
     def get_number(self) -> int:
         return self.get_number()
 
@@ -35,7 +32,7 @@ class board:
                     if self.__board[i, j].get_player_on_field() == 1:
                         print("X", end=' ')
                     else:
-                        print("▄", end=' ')
+                        print("O", end=' ')
                 else:
                     print(" ", end=' ')
             print("║")
