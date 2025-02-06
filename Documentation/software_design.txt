@@ -1,0 +1,13 @@
+As the new developer, I’ve found many problems with the existing code. It’s not well-structured, with only a few classes 
+and too much messy code. This makes it hard to read, change, or reuse. Since there aren’t enough classes, there are probably 
+a lot of duplicate parts, which can cause mistakes and make updates harder. Testing will also be difficult because the code 
+is not broken into clear sections.
+
+The code should have been kept simple and short—almost stupid—so it’s easy to follow. Instead, it’s long, messy, and confusing. 
+Many variables and functions have unclear names, making it even harder to understand. Plus, there’s not enough documentation, 
+so figuring out what the code does takes much longer than it should.
+
+There’s also no consistent style—different parts look like they were written by different people. 
+Some functions try to do too many things at once, which makes fixing and improving the code a headache. 
+Important coding rules like keeping things simple, reusing code, and using clear names were not followed. 
+Without major cleanup, this code will be frustrating to work with.
