@@ -138,10 +138,24 @@ class game:
                 self.__gameboard.get_board()[i, column].set_player_on_field(player)
                 return True
         return False
-    #def switch_active_player(self) # kati
+    def switch_active_player(self):
+        if self.__current_player == self.__players[0]:
+            self.__current_player = self.__players[1]
+        else:
+            self.__current_player = self.__players[0]
+
     #def check-win(self) # Tim
     #def run_game(self) # Tim
-    #def game_end(self) # kati
+
+    def game_end(self)
+        self.__gameboard.print_board()
+        if winner == 1 or winner == 2:
+            print(f"Player {winner} has won! Congratulations!")
+        else:
+            print("Game draw!")
+
+        print("Game over. Thanks for playing!")
+        exit()
 
     def get_gameboard(self):
         return self.__gameboard
