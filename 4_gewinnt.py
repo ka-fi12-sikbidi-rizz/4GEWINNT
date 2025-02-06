@@ -3,11 +3,14 @@ import numpy as np
 
 class Player:
 
+    __number: int
+    def __init__(self):
+        self.__number = 0
     def set_number(self, number: int):
-        self.number = number
+        self.__number = number
 
     def get_number(self) -> int:
-        return self.get_number()
+        return self.__number
 
     def place_coin(self, coin):
         return self.place_coin
@@ -92,34 +95,16 @@ class game:
         return self.__current_player
     
     def player_input(self, current_player):
-        while True:
+ 
+        
+        try:  
+            column = int(input(f"Player {current_player.get_number()}, choose a column between one and seven: ")) - 1
             
-            self.__gameboard.print_board()
-
-            try:
-                
-                column = int(input(f"Player {current_player.get_number()}, choose a column between one and seven: ")) - 1
-
-                
-                if column < 0 or column >= 7:
-                    print("Invalid input. Please choose a number between one and seven.")
-                    continue
-
-               
-                if current_player.place_coin(column, self.__gameboard):
-                    print(f"Player {current_player.get_number()} has set a coin in column {column + 1}.")
-                else:
-                    print("The row is full, please choose another one.")
-                    continue
-
-                
-                if current_player == self.__players[0]:
-                    current_player = self.__players[1]
-                else:
-                    current_player = self.__players[0]
-
-            except ValueError:
+            if column < 0 or column >= 7:
                 print("Invalid input. Please choose a number between one and seven.")
+                 
+        except ValueError:
+            print("Invalid input. Please choose a number between one and seven.")
 
     def game_start(self):
         print("Welcome to a game of 4-WINS!")
@@ -130,14 +115,16 @@ class game:
 
     def place_coin(self, player, column):
         for i in range(6):
-            if (self.__gameboard.get_board()[i, column].get_is_occupied() == False) and (i != 5):
+            if (self.__gameboard.get_board()[i, column].get_is_occipied() == False) and (i != 5):
                 if(self.__gameboard.get_board()[i+1, column].get_is_occupied() == True):
                     self.__gameboard.get_board()[i, column].set_player_on_field(player)
                     return True
             elif i == 5:
                 self.__gameboard.get_board()[i, column].set_player_on_field(player)
                 return True
+        print("The row is full, please choose another one.")
         return False
+    
     def switch_active_player(self):
         if self.__current_player == self.__players[0]:
             self.__current_player = self.__players[1]
@@ -145,7 +132,19 @@ class game:
             self.__current_player = self.__players[0]
 
     #def check-win(self) # Tim
-    #def run_game(self) # Tim
+
+    def run_game(self): # Tim
+        self.__gameboard.print_board()
+        input = self.player_input(self.__current_player)
+        while not self.place_coin(self.__current_player.get_number(), input):
+            input = self.player_input(self.__current_player)
+        self.__gameboard.print_board()
+        #if self.check_win():
+        #    return 0
+        self.switch_active_player()
+        return 1
+
+
 
     def game_end(self):
         self.__gameboard.print_board()
@@ -162,11 +161,9 @@ class game:
 
 if __name__ == "__main__":
     game = game()
-    b = game.get_gameboard()
-    b.get_board()[5, 3].set_player_on_field(1)
-    
-    
-    b.get_board()[4, 3].set_player_on_field(2)
-    b.print_board()
+    game.game_start()
+    while True:
+        game.run_game()
+    game.game_end()
     
     
