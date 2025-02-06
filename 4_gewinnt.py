@@ -1,4 +1,6 @@
 import numpy as np
+
+
 class Player:
 
     def set_number(self, number: int):
@@ -76,8 +78,26 @@ class field:
     def get_player_on_field(self):
         return self.__player_on_field
 
+class game:
+    __players: list
+    __gameboard: board
+    def __init__(self):
+        self.__players = [Player(), Player()]
+        self.__players[0].set_number(1)
+        self.__players[1].set_number(2)
+        self.__gameboard = board()
+    #def game_start(self)
+    #def place_coin(self, player, column)    
+    #def check-win(self)
+    #def game_end(self)
+
+    def get_gameboard(self):
+        return self.__gameboard
+
 if __name__ == "__main__":
-    b = board()
+    game = game()
+    b = game.get_gameboard()
     b.get_board()[5, 3].set_player_on_field(1)
     b.get_board()[4, 3].set_player_on_field(2)
     b.print_board()
+    
