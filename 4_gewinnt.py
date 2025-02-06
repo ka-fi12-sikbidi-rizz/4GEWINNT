@@ -117,15 +117,12 @@ class game:
             except ValueError:
                 print("Invalid input. Please choose a number between one and seven.")
 
-    def game_start(self)
+    def game_start(self):
         print("Welcome to a game of 4-WINS!")
         print("You are currently playing against another player.")
 
         current_player = self.__players[0]
 
-    #def place_coin(self, player, column)    
-          
-    #def game_start(self)
 
     def place_coin(self, player, column):
         for i in range(6):
