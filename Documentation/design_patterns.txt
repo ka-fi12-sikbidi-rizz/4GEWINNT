@@ -1,0 +1,10 @@
+Bridge Design Pattern
+The Bridge Design Pattern is a structural design pattern that separates the "what it does" from the "how it does it", 
+making the code more adaptable for future changes. For example, imagine you have a remote control that can adjust sound, light, brightness, 
+or channels across different devices. Without the Bridge Pattern, you would likely need a separate remote control for each device, leading 
+to redundant code and a messy structure.This pattern decouples abstraction (the "what") from implementation (the "how"). This means you can 
+modify or extend one part without affecting the other. The abstraction holds a reference to the implementation, allowing them to work together seamlessly. 
+For instance, a remote control can turn a device on with a button—it only cares about the device turning on, not how the device actually achieves 
+that.By using the Bridge Pattern, you gain greater flexibility, reusability, and cleaner code, as you no longer need to duplicate abstractions for 
+different implementations. Additionally, it simplifies testing since you can test the abstraction and implementation independently. This pattern 
+is especially useful in large systems where changes are frequent, as it reduces the risk of introducing bugs when adding new features or devices.
