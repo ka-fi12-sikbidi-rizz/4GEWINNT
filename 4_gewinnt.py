@@ -86,10 +86,16 @@ class game:
         self.__players[0].set_number(1)
         self.__players[1].set_number(2)
         self.__gameboard = board()
+          
     #def game_start(self)
+
     def place_coin(self, player, column):
         for i in range(6):
-            if self.__gameboard.get_board()[i, column].get_is_occupied() == False and (self.__gameboard.get_board()[i+1, column].get_is_occupied() == True or i == 5):
+            if (self.__gameboard.get_board()[i, column].get_is_occupied() == False) and (i != 5):
+                if(self.__gameboard.get_board()[i+1, column].get_is_occupied() == True):
+                    self.__gameboard.get_board()[i, column].set_player_on_field(player)
+                    return True
+            elif i == 5:
                 self.__gameboard.get_board()[i, column].set_player_on_field(player)
                 return True
         return False
@@ -104,8 +110,5 @@ if __name__ == "__main__":
     game = game()
     b = game.get_gameboard()
     b.get_board()[5, 3].set_player_on_field(1)
-    b.get_board()[4, 3].set_player_on_field(2)
-    b.print_board()
-    game.place_coin(1, 3)
-    b.print_board()
+    
     
