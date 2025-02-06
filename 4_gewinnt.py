@@ -147,7 +147,7 @@ class game:
     #def check-win(self) # Tim
     #def run_game(self) # Tim
 
-    def game_end(self)
+    def game_end(self):
         self.__gameboard.print_board()
         if winner == 1 or winner == 2:
             print(f"Player {winner} has won! Congratulations!")
