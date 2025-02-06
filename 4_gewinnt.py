@@ -15,18 +15,18 @@ class board:
                 
     def print_board(self):
         for i in range(self.__rows):
-            print(i+1," |", end=' ')
+            print(i+1,"║", end=' ')
             for j in range(self.__columns):
                 if field.get_is_occupied(self.__board[i, j]):
                     if self.__board[i, j].get_player_on_field() == 1:
                         print("X", end=' ')
                     else:
-                        print("O", end=' ')
+                        print("▄", end=' ')
                 else:
                     print(" ", end=' ')
-            print("|")
-        print("   └───────────────┘")
-        print("     1 2 3 4 5 6 7") 
+            print("║")
+        print("  ╚═══════════════╝")
+        print("    1 2 3 4 5 6 7") 
     
 class field:
     __x_coordinate: int
