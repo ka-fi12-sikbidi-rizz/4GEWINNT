@@ -81,13 +81,17 @@ class field:
 class game:
     __players: list
     __gameboard: board
+    __current_player: Player
     def __init__(self):
         self.__players = [Player(), Player()]
         self.__players[0].set_number(1)
         self.__players[1].set_number(2)
         self.__gameboard = board()
 
-    def player_input(self):
+    def get_current_player(self):
+        return self.__current_player
+    
+    def player_input(self, current_player):
         while True:
             
             self.__gameboard.print_board()
@@ -121,7 +125,7 @@ class game:
         print("Welcome to a game of 4-WINS!")
         print("You are currently playing against another player.")
 
-        current_player = self.__players[0]
+        self.__current_player = self.__players[0]
 
 
     def place_coin(self, player, column):
@@ -134,9 +138,10 @@ class game:
                 self.__gameboard.get_board()[i, column].set_player_on_field(player)
                 return True
         return False
-        
-    #def check-win(self)
-    #def game_end(self)
+    #def switch_active_player(self) # kati
+    #def check-win(self) # Tim
+    #def run_game(self) # Tim
+    #def game_end(self) # kati
 
     def get_gameboard(self):
         return self.__gameboard
