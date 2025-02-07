@@ -152,7 +152,7 @@ class game:
 
         for row in range(6):
             for col in range(4):
-                current = board[row, col].get_player_on_field()
+                current = matrix[row, col].get_player_on_field()
                 if current != 0:
                     next1 = matrix[row, col + 1].get_player_on_field()
                     next2 = matrix[row, col + 2].get_player_on_field()
