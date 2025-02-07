@@ -90,20 +90,19 @@ class game:
     __players: list
     __gameboard: board
     __current_player: Player
-    __computer_move: int
 
     def __init__(self):
         self.__players = [Player(), Player()]
         self.__players[0].set_number(1)
         self.__players[1].set_number(2)
         self.__gameboard = board()
-        self.__computer_move = 3
+
 
     def get_current_player(self):
         return self.__current_player
 
     def player_input(self):
-        if self.get_current_player().get_number() == 1:
+
             while True:
                 player_input = input(
                     f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
@@ -120,9 +119,6 @@ class game:
 
                 except ValueError:
                     print("Invalid input. Please choose a number between one and seven.")
-        else:
-            print(f"Player {self.get_current_player().get_number()} (Computer) is making a move.")
-            return self.__computer_move
 
     def game_start(self):
         print("Welcome to a game of 4-WINS!")
