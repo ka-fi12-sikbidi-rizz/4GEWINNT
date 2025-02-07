@@ -119,7 +119,7 @@ class game:
 
 
     def place_coin(self, player):
-        valid: bool = False
+        valid = False
         while not valid:
             column = self.player_input()
             for i in range(6):
@@ -149,10 +149,9 @@ class game:
         while True:
             self.__gameboard.print_board()
             self.place_coin(self.__current_player.get_number())
-            #if self.check_win():
-            #    return 0
+            if self.check_win():
+                return False
             self.switch_active_player()
-        return 1
 
 
 
@@ -172,8 +171,8 @@ class game:
 if __name__ == "__main__":
     game = game()
     game.game_start()
-    while True:
-        game.run_game()
+    while game.run_game():
+        pass
     game.game_end()
     
     
