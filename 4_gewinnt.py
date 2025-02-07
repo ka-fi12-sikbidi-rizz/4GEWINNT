@@ -90,33 +90,39 @@ class game:
     __players: list
     __gameboard: board
     __current_player: Player
+    __computer_move: int
 
     def __init__(self):
         self.__players = [Player(), Player()]
         self.__players[0].set_number(1)
         self.__players[1].set_number(2)
         self.__gameboard = board()
+        self.__computer_move = 3
 
     def get_current_player(self):
         return self.__current_player
 
     def player_input(self):
-        while True:
-            player_input = input(
-                f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
-            if player_input == "quit" or player_input == "exit":
-                print("Game over. Thanks for playing!")
-                exit()
-            try:
-                column = int(player_input) - 1
-                if column < 0 or column >= 7:
+        if self.get_current_player().get_number() == 1:
+            while True:
+                player_input = input(
+                    f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
+                if player_input == "quit" or player_input == "exit":
+                    print("Game over. Thanks for playing!")
+                    exit()
+                try:
+                    column = int(player_input) - 1
+                    if column < 0 or column >= 7:
+                        print("Invalid input. Please choose a number between one and seven.")
+                    else:
+                        return column
+
+
+                except ValueError:
                     print("Invalid input. Please choose a number between one and seven.")
-                else:
-                    return column
-
-
-            except ValueError:
-                print("Invalid input. Please choose a number between one and seven.")
+        else:
+            print(f"Player {self.get_current_player().get_number()} (Computer) is making a move.")
+            return self.__computer_move
 
     def game_start(self):
         print("Welcome to a game of 4-WINS!")
@@ -159,6 +165,7 @@ class game:
                     next3 = matrix[row, col + 3].get_player_on_field()
                     if current == next1 == next2 == next3:
                         return current
+
 
         for row in range(3):
             for col in range(7):
