@@ -94,15 +94,18 @@ class game:
     def get_current_player(self):
         return self.__current_player
     
-    def player_input(self, current_player):
+    def player_input(self):
  
         
         try:  
-            column = int(input(f"Player {current_player.get_number()}, choose a column between one and seven: ")) - 1
+            column = int(input(f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")) - 1
             
-            if column < 0 or column >= 7:
+            if column < 1 or column >= 7:
                 print("Invalid input. Please choose a number between one and seven.")
-                 
+            else: 
+                return column         
+
+        
         except ValueError:
             print("Invalid input. Please choose a number between one and seven.")
 
@@ -113,17 +116,23 @@ class game:
         self.__current_player = self.__players[0]
 
 
-    def place_coin(self, player, column):
-        for i in range(6):
-            if (self.__gameboard.get_board()[i, column].get_is_occipied() == False) and (i != 5):
-                if(self.__gameboard.get_board()[i+1, column].get_is_occupied() == True):
+    def place_coin(self, player):
+        valid: bool = False
+        while not valid:
+            column = self.player_input()
+            for i in range(6):
+                if (self.__gameboard.get_board()[i, column].get_is_occupied() == False) and (i != 5):
+                    if(self.__gameboard.get_board()[i+1, column].get_is_occupied() == True):
+                        self.__gameboard.get_board()[i, column].set_player_on_field(player)
+                        valid = True
+                        break
+                elif i == 5 and self.__gameboard.get_board()[i, column].get_is_occupied() == False:
                     self.__gameboard.get_board()[i, column].set_player_on_field(player)
-                    return True
-            elif i == 5:
-                self.__gameboard.get_board()[i, column].set_player_on_field(player)
-                return True
-        print("The row is full, please choose another one.")
-        return False
+                    valid = True
+                    break
+                if i == 0 and self.__gameboard.get_board()[i, column].get_is_occupied() == True:
+                    print("The row is full, please choose another one.")
+
     
     def switch_active_player(self):
         if self.__current_player == self.__players[0]:
@@ -134,14 +143,12 @@ class game:
     #def check-win(self) # Tim
 
     def run_game(self): # Tim
-        self.__gameboard.print_board()
-        input = self.player_input(self.__current_player)
-        while not self.place_coin(self.__current_player.get_number(), input):
-            input = self.player_input(self.__current_player)
-        self.__gameboard.print_board()
-        #if self.check_win():
-        #    return 0
-        self.switch_active_player()
+        while True:
+            self.__gameboard.print_board()
+            self.place_coin(self.__current_player.get_number())
+            #if self.check_win():
+            #    return 0
+            self.switch_active_player()
         return 1
 
 
