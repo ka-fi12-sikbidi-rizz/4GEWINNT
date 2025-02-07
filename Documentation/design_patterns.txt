@@ -8,3 +8,14 @@ For instance, a remote control can turn a device on with a button—it only care
 that.By using the Bridge Pattern, you gain greater flexibility, reusability, and cleaner code, as you no longer need to duplicate abstractions for 
 different implementations. Additionally, it simplifies testing since you can test the abstraction and implementation independently. This pattern 
 is especially useful in large systems where changes are frequent, as it reduces the risk of introducing bugs when adding new features or devices.
+
+Iterator Design Pattern
+The iterator design pattern is kind of like having a remote and going through a playlist. You don't need to know how the songs were stored and
+you don't need to give it full access to the playlist.
+So the iterator can access elements of a collection, like lists, without needing full access and can go through different collection
+with the same interface. It keeps the internal structure of the collections hidden, meaning it separates the interation logic from
+the list, making it more versatile and flexible. The iterator keeps track of the current position in the collection. It also allows us
+to add more iterators without changing existing collections.
+But how does it work? There is an interator interface (Abstract class for example), a concrete iterator which keeps track of the postion in the list
+and controls how to go through the list, an aggregate interface allows a collection to define the iterator separately, a concrete aggregate
+which implements the aggregate interface and stores the actual data and also create an interator specific to its structure.
