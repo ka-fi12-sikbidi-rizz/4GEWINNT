@@ -100,6 +100,7 @@ class game:
         self.__gameboard = board()
         self.__computer_move = 3
         self.__is_single_player = False
+        self.__current_player = self.__players[0]
 
     def get_current_player(self):
         return self.__current_player
@@ -117,9 +118,7 @@ class game:
                 print("You are playing against another player.")
                 break
             else:
-                print("Invalid input. Please type 'computer' or '2p'.")
-
-
+                print("Invalid input. Please type 'computer' or '2players'.")
 
     def player_input(self):
         if self.get_current_player().get_number() == 1:
@@ -135,38 +134,50 @@ class game:
                         print("Invalid input. Please choose a number between one and seven.")
                     else:
                         return column
-
                 except ValueError:
                     print("Invalid input. Please choose a number between one and seven.")
         else:
-            print(f"Computer is making a move.")
-            return self.__computer_move
+            # Computer's turn if single-player mode, otherwise Player 2's turn
+            if self.__is_single_player:
+                print(f"Computer (Player 2) is making a move.")
+                return self.__computer_move  # Placeholder for a simple computer move
+            else:
+                while True:
+                    player_input = input(
+                        f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
+                    if player_input == "quit" or player_input == "exit":
+                        print("Game over. Thanks for playing!")
+                        exit()
+                    try:
+                        column = int(player_input) - 1
+                        if column < 0 or column >= 7:
+                            print("Invalid input. Please choose a number between one and seven.")
+                        else:
+                            return column
+                    except ValueError:
+                        print("Invalid input. Please choose a number between one and seven.")
 
     def game_start(self):
         print("Welcome to a game of 4-WINS!")
         self.set_game_mode()
-        if self.__is_single_player:
-            print("You are playing against the computer.")
-        else:
-            print("You are playing against another player.")
-        self.__current_player = self.__players[0]
+        self.__current_player = self.__players[0]  # Player 1 always starts
 
     def place_coin(self, player):
         valid = False
         while not valid:
             column = self.player_input()
             for i in range(6):
-                if (self.__gameboard.get_board()[i, column].get_is_occupied() == False) and (i != 5):
-                    if (self.__gameboard.get_board()[i + 1, column].get_is_occupied() == True):
+                if not self.__gameboard.get_board()[i, column].get_is_occupied() and i != 5:
+                    if self.__gameboard.get_board()[i + 1, column].get_is_occupied():
                         self.__gameboard.get_board()[i, column].set_player_on_field(player)
                         valid = True
                         break
-                elif i == 5 and self.__gameboard.get_board()[i, column].get_is_occupied() == False:
+                elif i == 5 and not self.__gameboard.get_board()[i, column].get_is_occupied():
                     self.__gameboard.get_board()[i, column].set_player_on_field(player)
                     valid = True
                     break
-                if i == 0 and self.__gameboard.get_board()[i, column].get_is_occupied() == True:
-                    print("The row is full, please choose another one.")
+                if i == 0 and self.__gameboard.get_board()[i, column].get_is_occupied():
+                    print("The column is full, please choose another one.")
                     break
 
     def switch_active_player(self):
@@ -177,27 +188,34 @@ class game:
 
     def check_win(self):
         matrix = self.__gameboard.get_board()
-
         for row in range(6):
             for col in range(4):
                 current = matrix[row, col].get_player_on_field()
                 if current != 0:
-                    next1 = matrix[row, col + 1].get_player_on_field()
-                    next2 = matrix[row, col + 2].get_player_on_field()
-                    next3 = matrix[row, col + 3].get_player_on_field()
-                    if current == next1 == next2 == next3:
+                    if all(current == matrix[row, col + i].get_player_on_field() for i in range(4)):
                         return current
-
 
         for row in range(3):
             for col in range(7):
                 current = matrix[row, col].get_player_on_field()
                 if current != 0:
-                    next1 = matrix[row + 1, col].get_player_on_field()
-                    next2 = matrix[row + 2, col].get_player_on_field()
-                    next3 = matrix[row + 3, col].get_player_on_field()
-                    if current == next1 == next2 == next3:
+                    if all(current == matrix[row + i, col].get_player_on_field() for i in range(4)):
                         return current
+
+        for row in range(3):
+            for col in range(4):
+                current = matrix[row, col].get_player_on_field()
+                if current != 0:
+                    if all(current == matrix[row + i, col + i].get_player_on_field() for i in range(4)):
+                        return current
+
+        for row in range(3, 6):
+            for col in range(4):
+                current = matrix[row, col].get_player_on_field()
+                if current != 0:
+                    if all(current == matrix[row - i, col + i].get_player_on_field() for i in range(4)):
+                        return current
+
         return 0
 
     def run_game(self):  # Tim
