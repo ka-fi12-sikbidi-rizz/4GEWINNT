@@ -20,15 +20,16 @@ class board:
 
     def get_board(self):
         return self.__board
+
     def __init__(self):
         self.__board = np.zeros((self.__rows, self.__columns), dtype=field)
         for i in range(self.__rows):
             for j in range(self.__columns):
                 self.__board[i, j] = field(i, j)
-                
+
     def print_board(self):
         for i in range(self.__rows):
-            print(i+1,"║", end=' ')
+            print(i + 1, "║", end=' ')
             for j in range(self.__columns):
                 if field.get_is_occupied(self.__board[i, j]):
                     if self.__board[i, j].get_player_on_field() == 1:
@@ -39,15 +40,17 @@ class board:
                     print(" ", end=' ')
             print("║")
         print("  ╚═══════════════╝")
-        print("    1 2 3 4 5 6 7") 
-    
+        print("    1 2 3 4 5 6 7")
+
+
 class field:
     __x_coordinate: int
     __y_coordinate: int
     __is_occupied: bool
     __player_on_field: int
+
     def __init__(self, x_coordinate, y_coordinate):
-        self.__x_coordinate = x_coordinate 
+        self.__x_coordinate = x_coordinate
         self.__y_coordinate = y_coordinate
         self.__is_occupied = False
         self.__player_on_field = 0
@@ -60,28 +63,30 @@ class field:
 
     def get_x_coordinate(self):
         return self.__x_coordinate
-    
+
     def get_y_coordinate(self):
         return self.__y_coordinate
-    
+
     def set_is_occupied(self, is_occupied):
         self.__is_occupied = is_occupied
-        
+
     def get_is_occupied(self):
         return self.__is_occupied
-    
+
     def set_player_on_field(self, player):
         self.__player_on_field = player
         if player != 0:
             self.__is_occupied = True
-    
+
     def get_player_on_field(self):
         return self.__player_on_field
+
 
 class game:
     __players: list
     __gameboard: board
     __current_player: Player
+
     def __init__(self):
         self.__players = [Player(), Player()]
         self.__players[0].set_number(1)
@@ -90,29 +95,27 @@ class game:
 
     def get_current_player(self):
         return self.__current_player
-    
+
     def player_input(self, current_player):
         while True:
-            
+
             self.__gameboard.print_board()
 
             try:
-                
-                column = int(input(f"Player {current_player.get_number()}, choose a column between one and seven: ")) - 1
 
-                
+                column = int(
+                    input(f"Player {current_player.get_number()}, choose a column between one and seven: ")) - 1
+
                 if column < 0 or column >= 7:
                     print("Invalid input. Please choose a number between one and seven.")
                     continue
 
-               
                 if current_player.place_coin(column, self.__gameboard):
                     print(f"Player {current_player.get_number()} has set a coin in column {column + 1}.")
                 else:
                     print("The row is full, please choose another one.")
                     continue
 
-                
                 if current_player == self.__players[0]:
                     current_player = self.__players[1]
                 else:
@@ -127,46 +130,69 @@ class game:
 
         self.__current_player = self.__players[0]
 
-
     def place_coin(self, player, column):
         for i in range(6):
             if (self.__gameboard.get_board()[i, column].get_is_occupied() == False) and (i != 5):
-                if(self.__gameboard.get_board()[i+1, column].get_is_occupied() == True):
+                if (self.__gameboard.get_board()[i + 1, column].get_is_occupied() == True):
                     self.__gameboard.get_board()[i, column].set_player_on_field(player)
                     return True
             elif i == 5:
                 self.__gameboard.get_board()[i, column].set_player_on_field(player)
                 return True
         return False
+
     def switch_active_player(self):
         if self.__current_player == self.__players[0]:
             self.__current_player = self.__players[1]
         else:
             self.__current_player = self.__players[0]
 
-    #def check-win(self) # Tim
-    #def run_game(self) # Tim
+    def check_win(self):
+        board = self.__gameboard.get_board()
 
-    def game_end(self):
+        for row in range(6):
+            for col in range(4):
+                current = board[row, col].get_player_on_field()
+                if current != 0:
+                    next1 = board[row, col + 1].get_player_on_field()
+                    next2 = board[row, col + 2].get_player_on_field()
+                    next3 = board[row, col + 3].get_player_on_field()
+                    if current == next1 == next2 == next3:
+                        print(f"Found horizontal win for player {current}")
+                        return current
+
+        for row in range(3):
+            for col in range(7):
+                current = board[row, col].get_player_on_field()
+                if current != 0:
+                    next1 = board[row + 1, col].get_player_on_field()
+                    next2 = board[row + 2, col].get_player_on_field()
+                    next3 = board[row + 3, col].get_player_on_field()
+                    if current == next1 == next2 == next3:
+                        return current
+        return 0
+
+    # def run_game(self)
+
+    def game_end(self, winner):
         self.__gameboard.print_board()
         if winner == 1 or winner == 2:
             print(f"Player {winner} has won! Congratulations!")
         else:
             print("Game draw!")
-
         print("Game over. Thanks for playing!")
         exit()
 
     def get_gameboard(self):
         return self.__gameboard
 
+
 if __name__ == "__main__":
     game = game()
     b = game.get_gameboard()
     b.get_board()[5, 3].set_player_on_field(1)
-    
-    
+
     b.get_board()[4, 3].set_player_on_field(2)
     b.print_board()
-    
-    
+
+
