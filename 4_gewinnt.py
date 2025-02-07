@@ -95,19 +95,21 @@ class game:
         return self.__current_player
     
     def player_input(self):
- 
-        
-        try:  
-            column = int(input(f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")) - 1
-            
-            if column < 1 or column >= 7:
-                print("Invalid input. Please choose a number between one and seven.")
-            else: 
-                return column         
+        while True:
+            player_input = input(f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
+            if player_input == "quit" or player_input == "exit":
+                print("Game over. Thanks for playing!")
+                exit()
+            try:  
+                column = int(player_input) - 1
+                if column < 0 or column >= 7:
+                    print("Invalid input. Please choose a number between one and seven.")
+                else: 
+                    return column         
 
-        
-        except ValueError:
-            print("Invalid input. Please choose a number between one and seven.")
+            
+            except ValueError:
+                print("Invalid input. Please choose a number between one and seven.")
 
     def game_start(self):
         print("Welcome to a game of 4-WINS!")
@@ -140,7 +142,8 @@ class game:
         else:
             self.__current_player = self.__players[0]
 
-    #def check-win(self) # Tim
+    def check_win(self): # Tim
+        pass
 
     def run_game(self): # Tim
         while True:
