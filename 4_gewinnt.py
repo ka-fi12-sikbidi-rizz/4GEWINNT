@@ -90,38 +90,66 @@ class game:
     __players: list
     __gameboard: board
     __current_player: Player
+    __computer_move: int
+    __is_single_player: bool
 
     def __init__(self):
         self.__players = [Player(), Player()]
         self.__players[0].set_number(1)
         self.__players[1].set_number(2)
         self.__gameboard = board()
+        self.__computer_move = 3
+        self.__is_single_player = False
 
     def get_current_player(self):
         return self.__current_player
 
-    def player_input(self):
+    def set_game_mode(self):
         while True:
-            player_input = input(
-                f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
-            if player_input == "quit" or player_input == "exit":
-                print("Game over. Thanks for playing!")
-                exit()
-            try:
-                column = int(player_input) - 1
-                if column < 0 or column >= 7:
+            choice = input(
+                "Do you want to play against the computer or a second player? (Type 'computer' or '2players'): ").lower()
+            if choice == 'computer':
+                self.__is_single_player = True
+                print("You are now playing against the computer.")
+                break
+            elif choice == '2players':
+                self.__is_single_player = False
+                print("You are playing against another player.")
+                break
+            else:
+                print("Invalid input. Please type 'computer' or '2p'.")
+
+
+
+    def player_input(self):
+        if self.get_current_player().get_number() == 1:
+            while True:
+                player_input = input(
+                    f"Player {self.get_current_player().get_number()}, choose a column between one and seven: ")
+                if player_input == "quit" or player_input == "exit":
+                    print("Game over. Thanks for playing!")
+                    exit()
+                try:
+                    column = int(player_input) - 1
+                    if column < 0 or column >= 7:
+                        print("Invalid input. Please choose a number between one and seven.")
+                    else:
+                        return column
+
+
+                except ValueError:
                     print("Invalid input. Please choose a number between one and seven.")
-                else:
-                    return column
-
-
-            except ValueError:
-                print("Invalid input. Please choose a number between one and seven.")
+        else:
+            print(f"Player {self.get_current_player().get_number()} (Computer) is making a move.")
+            return self.__computer_move
 
     def game_start(self):
         print("Welcome to a game of 4-WINS!")
-        print("You are currently playing against another player.")
-
+        self.set_game_mode()
+        if self.__is_single_player:
+            print("You are playing against the computer.")
+        else:
+            print("You are playing against another player.")
         self.__current_player = self.__players[0]
 
     def place_coin(self, player):
@@ -140,6 +168,7 @@ class game:
                     break
                 if i == 0 and self.__gameboard.get_board()[i, column].get_is_occupied() == True:
                     print("The row is full, please choose another one.")
+                    break
 
     def switch_active_player(self):
         if self.__current_player == self.__players[0]:
@@ -159,6 +188,7 @@ class game:
                     next3 = matrix[row, col + 3].get_player_on_field()
                     if current == next1 == next2 == next3:
                         return current
+
 
         for row in range(3):
             for col in range(7):
@@ -181,12 +211,12 @@ class game:
 
     def game_end(self):
         self.__gameboard.print_board()
-        winner = self.check_win()  # Korrektur: Gewinner ermitteln
+        winner = self.check_win()
 
         if winner == 1 or winner == 2:
             print(f"Player {winner} has won! Congratulations!")
         else:
-            print("Game draw!")  # Falls es keinen Gewinner gibt
+            print("Game draw!")
 
         print("Game over. Thanks for playing!")
         exit()
