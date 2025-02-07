@@ -148,25 +148,25 @@ class game:
             self.__current_player = self.__players[0]
 
     def check_win(self):
-        board = self.__gameboard.get_board()
+        matrix = self.__gameboard.get_board()
 
         for row in range(6):
             for col in range(4):
                 current = board[row, col].get_player_on_field()
                 if current != 0:
-                    next1 = board[row, col + 1].get_player_on_field()
-                    next2 = board[row, col + 2].get_player_on_field()
-                    next3 = board[row, col + 3].get_player_on_field()
+                    next1 = matrix[row, col + 1].get_player_on_field()
+                    next2 = matrix[row, col + 2].get_player_on_field()
+                    next3 = matrix[row, col + 3].get_player_on_field()
                     if current == next1 == next2 == next3:
                         return current
 
         for row in range(3):
             for col in range(7):
-                current = board[row, col].get_player_on_field()
+                current = matrix[row, col].get_player_on_field()
                 if current != 0:
-                    next1 = board[row + 1, col].get_player_on_field()
-                    next2 = board[row + 2, col].get_player_on_field()
-                    next3 = board[row + 3, col].get_player_on_field()
+                    next1 = matrix[row + 1, col].get_player_on_field()
+                    next2 = matrix[row + 2, col].get_player_on_field()
+                    next3 = matrix[row + 3, col].get_player_on_field()
                     if current == next1 == next2 == next3:
                         return current
         return 0
@@ -181,12 +181,12 @@ class game:
 
     def game_end(self):
         self.__gameboard.print_board()
-        winner = self.check_win()  # Korrektur: Gewinner ermitteln
+        winner = self.check_win()
 
         if winner == 1 or winner == 2:
             print(f"Player {winner} has won! Congratulations!")
         else:
-            print("Game draw!")  # Falls es keinen Gewinner gibt
+            print("Game draw!")
 
         print("Game over. Thanks for playing!")
         exit()
