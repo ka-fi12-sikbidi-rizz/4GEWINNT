@@ -146,6 +146,7 @@ class game:
                     break
                 if i == 0 and self.__gameboard.get_board()[i, column].get_is_occupied() == True:
                     print("The row is full, please choose another one.")
+                    break
 
     def switch_active_player(self):
         if self.__current_player == self.__players[0]:
