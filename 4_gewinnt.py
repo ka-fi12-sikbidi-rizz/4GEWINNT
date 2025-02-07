@@ -158,7 +158,6 @@ class game:
                     next2 = board[row, col + 2].get_player_on_field()
                     next3 = board[row, col + 3].get_player_on_field()
                     if current == next1 == next2 == next3:
-                        print(f"Found horizontal win for player {current}")
                         return current
 
         for row in range(3):
@@ -172,7 +171,13 @@ class game:
                         return current
         return 0
 
-    # def run_game(self)
+    def run_game(self):  # Tim
+        while True:
+            self.__gameboard.print_board()
+            self.place_coin(self.__current_player.get_number())
+            if self.check_win():
+                return False
+            self.switch_active_player()
 
     def game_end(self, winner):
         self.__gameboard.print_board()
