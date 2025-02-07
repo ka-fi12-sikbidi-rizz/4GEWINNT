@@ -136,11 +136,10 @@ class game:
                     else:
                         return column
 
-
                 except ValueError:
                     print("Invalid input. Please choose a number between one and seven.")
         else:
-            print(f"Player {self.get_current_player().get_number()} (Computer) is making a move.")
+            print(f"Computer is making a move.")
             return self.__computer_move
 
     def game_start(self):
