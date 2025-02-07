@@ -152,15 +152,11 @@ class game:
 
     def check_win(self):
         matrix = self.__gameboard.get_board()
-
         for row in range(6):
             for col in range(4):
                 current = matrix[row, col].get_player_on_field()
                 if current != 0:
-                    next1 = matrix[row, col + 1].get_player_on_field()
-                    next2 = matrix[row, col + 2].get_player_on_field()
-                    next3 = matrix[row, col + 3].get_player_on_field()
-                    if current == next1 == next2 == next3:
+                    if all(current == matrix[row, col + i].get_player_on_field() for i in range(4)):
                         return current
 
 
@@ -168,11 +164,25 @@ class game:
             for col in range(7):
                 current = matrix[row, col].get_player_on_field()
                 if current != 0:
-                    next1 = matrix[row + 1, col].get_player_on_field()
-                    next2 = matrix[row + 2, col].get_player_on_field()
-                    next3 = matrix[row + 3, col].get_player_on_field()
-                    if current == next1 == next2 == next3:
+                    if all(current == matrix[row + i, col].get_player_on_field() for i in range(4)):
                         return current
+
+
+        for row in range(3):
+            for col in range(4):
+                current = matrix[row, col].get_player_on_field()
+                if current != 0:
+                    if all(current == matrix[row + i, col + i].get_player_on_field() for i in range(4)):
+                        return current
+
+
+        for row in range(3, 6):
+            for col in range(4):
+                current = matrix[row, col].get_player_on_field()
+                if current != 0:
+                    if all(current == matrix[row - i, col + i].get_player_on_field() for i in range(4)):
+                        return current
+
         return 0
 
     def run_game(self):  # Tim
