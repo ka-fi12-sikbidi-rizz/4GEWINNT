@@ -218,7 +218,7 @@ class game:
 
         return 0
 
-    def run_game(self):  # Tim
+    def run_game(self):
         while True:
             self.__gameboard.print_board()
             self.place_coin(self.__current_player.get_number())
