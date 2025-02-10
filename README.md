@@ -8,4 +8,4 @@ At the start you'll be asked to choose between single-player and two-player mode
 play against the computer or "2players" to play against another person.
 If you wish to exit the game at any time simply type "exit" or "quit".
 
-Import numpy for game.
+Import numpy and radom for the game.
