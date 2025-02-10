@@ -180,7 +180,7 @@ class game:
         
     def get_current_player(self):
         """
-        Returns who's turn it is.
+        Returns whos turn it is.
         """
         return self.__current_player
 
