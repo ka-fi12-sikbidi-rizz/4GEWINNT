@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 
 class Player:
@@ -174,7 +175,6 @@ class game:
         self.__players[0].set_number(1)
         self.__players[1].set_number(2)
         self.__gameboard = board()
-        self.__computer_move = 3
         self.__is_single_player = False
         self.__current_player = self.__players[0]
 
@@ -226,7 +226,7 @@ class game:
         else:
             if self.__is_single_player:
                 print(f"Computer (Player 2) is making a move.")
-                return self.__computer_move
+                return random.randint(0, 6)
             else:
                 while True:
                     player_input = input(
@@ -341,7 +341,7 @@ class game:
         winner = self.check_win()
 
         if winner == 1 or winner == 2:
-            print(f"Player {winner} has won! Sucks to be player 2!")
+            print(f"Player {winner} has won!")
         else:
             print("Game draw, great minds think alike or so they say!")
 
