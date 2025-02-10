@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch #
 from vier_gewinnt import game
 
 
@@ -13,9 +13,8 @@ class Unittest4WINS(unittest.TestCase):
         Creates a new game before each test and sets it to 2-player mode.
         """
         self.game = game()
-        self.game._game__is_single_player = False  # Direkte Änderung: Immer 2-Spieler-Modus
+        self.game._game__is_single_player = False
 
-    @patch('builtins.input', side_effect=['1'])
     def test_place_coin(self, mock_input):
         """
         Checks if a coin can be placed on the board.
@@ -30,7 +29,6 @@ class Unittest4WINS(unittest.TestCase):
         above = board[4, 0].get_player_on_field()
         self.assertEqual(above, 0)
 
-    @patch('builtins.input', side_effect=['1', '1', '1', '1'])
     def test_vertical_win(self, mock_input):
         """
         Checks if a player wins by placing 4 coins in a column.
