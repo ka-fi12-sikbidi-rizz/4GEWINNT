@@ -9,3 +9,5 @@ play against the computer or "2players" to play against another person.
 If you wish to exit the game at any time simply type "exit" or "quit".
 
 Import numpy and random for the game.
+
+Refernece were git repos dancingchair/4wins, drolpi/4win, Ferryry/4Wins
